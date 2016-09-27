@@ -1,0 +1,27 @@
+## load package
+library(tidyverse)
+library(ggplot2)
+
+## Load Data
+cor_data <-read_csv('corData1.csv')
+
+## Set Categorical
+str(cor_data)
+cor_data$gender <- as.factor(cor_data$gender)
+cor_data$program <- as.factor(cor_data$program)
+
+## Make Plot
+my.plot <- qplot(varA,varC,data=cor_data, shape=gender, color= program, size=I(3))
+
+## Add APA Elements
+my.plot <- my.plot + theme_classic(14)
+my.plot <- my.plot + theme(axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'), axis.line.y = element_line(colour = 'black', size = 0.5, linetype = 'solid'))
+
+## Label Cleanup
+my.plot <- my.plot + labs(title="",x="Self-esteem", y='Grade')
+
+## Change Range
+my.plot <- my.plot + coord_cartesian(xlim=c(1,5),ylim=c(1,5))
+
+## Save GG
+ggsave("my_scatter.pdf",plot=my.plot, width=6,height=6)
